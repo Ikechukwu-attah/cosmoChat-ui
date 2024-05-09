@@ -3,40 +3,50 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import { useOpenAIChat } from "./hooks/useOpenAIChat";
 
 const Chat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
+  const { data, error, isLoading, openAIChat } = useOpenAIChat();
+  //   console.log("aiResponse", aiResponse);
 
+  console.log({ isLoading });
+  console.log(messages);
   const handleChange = (e) => {
     setUserInput(e.target.value);
   };
 
-  const sendMessage = async () => {
+  const onSuccess = (aiResponse) => {
+    const cleanedResponse = aiResponse.replace(/^(AI|ai):\s*/, "");
+    setMessages((prev) => [...prev, { text: cleanedResponse, sender: "ai" }]);
+    console.log(aiResponse);
+  };
+  const sendMessage = async (e) => {
     if (!userInput.trim()) return;
     const newMessages = [...messages, { text: userInput, sender: "user" }];
     setMessages(newMessages);
     setUserInput("");
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8085/api/chat",
-        {
-          message: userInput,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const aiResponse = response.data.choices[0].message.content;
-      console.log("aiResponse", response.data.choices[0].message.content);
-      setMessages((prev) => [...prev, { text: aiResponse, sender: "ai" }]);
-    } catch (error) {
-      console.log("Error sending message", error);
-      setMessages((prev) => [...prev, { text: "Failed to fetch response" }]);
-    }
+    const conversationHistory = newMessages
+      .map((msg) => `${msg.sender === "ai" ? "AI" : "User"}: ${msg.text}`)
+      .join("\n");
+    console.log(conversationHistory);
+    openAIChat(conversationHistory, onSuccess);
+  };
+
+  const ThinkingIndicator = () => {
+    const [ellipsis, setEllipsis] = useState("");
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setEllipsis((prev) => (prev.length < 3 ? prev + "." : ""));
+      }, 500);
+
+      return () => clearInterval(intervalId);
+    }, []);
+
+    return <Typography>{`Thinking${ellipsis}`}</Typography>;
   };
 
   return (
@@ -58,7 +68,7 @@ const Chat = ({ isOpen, onClose }) => {
         height="calc(100% - 60px)"
         overflow={"auto"}
       >
-        {messages.map((message, index) => (
+        {messages?.map((message, index) => (
           <React.Fragment key={index}>
             {message.sender === "ai" ? (
               <Box
@@ -84,7 +94,13 @@ const Chat = ({ isOpen, onClose }) => {
                     borderRadius="10px"
                     width={"50%"}
                   >
-                    <h4>{message.text}</h4>
+                    {isLoading ? (
+                      <>
+                        <ThinkingIndicator />
+                      </>
+                    ) : (
+                      <Typography component={"h4"}> {message.text}</Typography>
+                    )}
                   </Box>
                 </Box>
 

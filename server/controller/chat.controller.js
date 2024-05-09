@@ -15,6 +15,7 @@ export const chatRequest = async (req, res) => {
       {
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: userMessage }],
+        prompt: "Explain to one with 0 - 1 year experience",
       },
       {
         headers: {
