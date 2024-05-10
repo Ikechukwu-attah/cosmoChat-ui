@@ -10,7 +10,7 @@ function App() {
       display={"flex"}
       height={"100vh"}
       maxWidth={"1366px"}
-      sx={{ bgcolor: "blueviolet" }}
+      sx={{ bgcolor: "darkblue" }}
     >
       <Home />
     </Box>

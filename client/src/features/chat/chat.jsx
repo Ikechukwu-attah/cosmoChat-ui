@@ -6,7 +6,12 @@ import axios from "axios";
 import { useOpenAIChat } from "./hooks/useOpenAIChat";
 
 const Chat = ({ isOpen, onClose }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      text: "I am AI cosmoChat. Ask me anything! ",
+      sender: "ai",
+    },
+  ]);
   const [userInput, setUserInput] = useState("");
   const { data, error, isLoading, openAIChat } = useOpenAIChat();
   //   console.log("aiResponse", aiResponse);
@@ -90,11 +95,11 @@ const Chat = ({ isOpen, onClose }) => {
                   />
                   <Box
                     bgcolor="#e1f5fe"
-                    p="5px"
+                    p="5px 10px"
                     borderRadius="10px"
                     width={"50%"}
                   >
-                    {isLoading ? (
+                    {index === message?.length - 1 && isLoading ? (
                       <>
                         <ThinkingIndicator />
                       </>
@@ -104,15 +109,15 @@ const Chat = ({ isOpen, onClose }) => {
                   </Box>
                 </Box>
 
-                <Typography component={"span"} color={"white"} pl={"40px"}>
+                {/* <Typography component={"span"} color={"white"} pl={"40px"}>
                   1st may 2024
-                </Typography>
+                </Typography> */}
               </Box>
             ) : (
               <Box display={"flex"} justifyContent={"flex-end"} p={"10px"}>
                 <Box
                   bgcolor="#228047"
-                  p="5px"
+                  p="5px 10px"
                   borderRadius="10px"
                   color={"#fff"}
                 >
