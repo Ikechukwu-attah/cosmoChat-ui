@@ -4,12 +4,14 @@ import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { useOpenAIChat } from "./hooks/useOpenAIChat";
+import { format } from "date-fns";
 
 const Chat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       text: "I am AI cosmoChat. Ask me anything! ",
       sender: "ai",
+      timestamp: new Date().toISOString(),
     },
   ]);
   const [userInput, setUserInput] = useState("");
@@ -23,13 +25,22 @@ const Chat = ({ isOpen, onClose }) => {
   };
 
   const onSuccess = (aiResponse) => {
-    const cleanedResponse = aiResponse.replace(/^(AI|ai):\s*/, "");
-    setMessages((prev) => [...prev, { text: cleanedResponse, sender: "ai" }]);
-    console.log(aiResponse);
+    const cleanedResponse = aiResponse.text.choices[0].message.content.replace(
+      /^(AI|ai):\s*/,
+      ""
+    );
+    setMessages((prev) => [
+      ...prev,
+      { text: cleanedResponse, sender: "ai", timestamp: aiResponse.timestamp },
+    ]);
+    console.log(aiResponse.timestamp);
   };
   const sendMessage = async (e) => {
     if (!userInput.trim()) return;
-    const newMessages = [...messages, { text: userInput, sender: "user" }];
+    const newMessages = [
+      ...messages,
+      { text: userInput, sender: "user", timestamp: new Date().toISOString() },
+    ];
     setMessages(newMessages);
     setUserInput("");
 
@@ -52,6 +63,10 @@ const Chat = ({ isOpen, onClose }) => {
     }, []);
 
     return <Typography>{`Thinking${ellipsis}`}</Typography>;
+  };
+
+  const formatDate = (isoString) => {
+    return format(new Date(isoString), "PPP");
   };
 
   return (
@@ -109,9 +124,9 @@ const Chat = ({ isOpen, onClose }) => {
                   </Box>
                 </Box>
 
-                {/* <Typography component={"span"} color={"white"} pl={"40px"}>
-                  1st may 2024
-                </Typography> */}
+                <Typography component={"span"} color={"white"} pl={"40px"}>
+                  {formatDate(message.timestamp)}
+                </Typography>
               </Box>
             ) : (
               <Box display={"flex"} justifyContent={"flex-end"} p={"10px"}>

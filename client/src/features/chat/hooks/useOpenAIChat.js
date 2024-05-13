@@ -20,7 +20,8 @@ export const useOpenAIChat = () => {
           },
         }
       );
-      const aiResponse = response.data.choices[0].message.content;
+      console.log("response", response);
+      const aiResponse = response.data;
       //   setData(response.data.choices[0].message.content);
       if (typeof onSuccess === "function") {
         onSuccess(aiResponse);
