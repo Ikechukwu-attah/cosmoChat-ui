@@ -1,20 +1,10 @@
-import { Box } from "@mui/material";
-import Home from "./pages/home/home";
+import { router } from "./routes/routes";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
-  return (
-    <Box
-      flexDirection={"column"}
-      marginLeft={"auto"}
-      marginRight={"auto"}
-      display={"flex"}
-      height={"100vh"}
-      maxWidth={"1366px"}
-      sx={{ bgcolor: "darkblue" }}
-    >
-      <Home />
-    </Box>
-  );
+  // This should match the order in the hook's return statement
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

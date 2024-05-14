@@ -1,6 +1,7 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
+
+import { Typography } from "@mui/material";
 
 // color design token
 export const tokens = (mode) => ({
@@ -120,3 +121,84 @@ export const tokens = (mode) => ({
         },
       }),
 });
+
+// Materia UI theme settings
+
+export const themeSettings = (mode) => {
+  const colors = tokens(mode); // 'colors' is an object with color definitions
+
+  return {
+    palette: {
+      mode: mode,
+      primary: {
+        main: mode === "dark" ? colors.primary[500] : colors.primary[100],
+      },
+      secondary: {
+        main: colors.greenAccent[500],
+      },
+      neutral: {
+        dark: colors.grey[700],
+        main: colors.grey[500],
+        light: colors.grey[100],
+      },
+      background: {
+        default: mode === "dark" ? colors.primary[500] : "fcfcfc",
+      },
+      error: {
+        main: colors.redAccent[500],
+      },
+      info: {
+        main: colors.blueAccent[500],
+      },
+    },
+    typography: {
+      fontFamily: ["popins", "sans-serif"].join(","),
+      fontSize: 12,
+      h1: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 40,
+      },
+      h2: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 32,
+      },
+      h3: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 24,
+      },
+      h4: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 20,
+      },
+      h5: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 16,
+      },
+      h6: {
+        fontFamily: ["popins", "sans-serif"].join(","),
+        fontSize: 14,
+      },
+    },
+  };
+};
+
+// context for the color mode
+
+export const ColorModeContext = createContext({
+  toggleColorMode: () => {},
+});
+
+export const useMode = () => {
+  const [mode, setMode] = useState("dark");
+
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () =>
+        setMode((prev) => (prev === "light" ? "dark" : "light")),
+    }),
+    []
+  );
+
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  return [theme, colorMode];
+};
