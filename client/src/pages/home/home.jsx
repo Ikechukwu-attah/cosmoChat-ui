@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
 import Chat from "../../features/chat/chat";
-import aiImage from "../../features/chat/assets/ai2.jpg";
+import aiImage from "../../features/chat/assets/Chat-pics.png";
 import { useMediaQuery } from "@mui/material";
 
 const Home = () => {

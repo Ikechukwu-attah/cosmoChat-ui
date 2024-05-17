@@ -1,9 +1,11 @@
 import React from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { ColorModeContext, useMode } from "../../theme";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import TopBar from "./topbar";
 import "../../index.css";
+import Sidebar from "./sidebar";
+import SideBar from "./sidebar";
 
 const DashboardLayouts = () => {
   const [theme, colorMode] = useMode();
@@ -12,10 +14,12 @@ const DashboardLayouts = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <h1>side bar</h1>
+          <SideBar />
           <main className="content" style={{ flex: 1 }}>
             <TopBar />
-            <Outlet />
+            <Box p={"20px"}>
+              <Outlet />
+            </Box>
           </main>{" "}
         </div>
       </ThemeProvider>{" "}
