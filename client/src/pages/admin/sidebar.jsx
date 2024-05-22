@@ -31,7 +31,7 @@ const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   return (
-    <Box>
+    <Box height={"100vh"}>
       <Sidebar
         rootStyles={{
           [`.${sidebarClasses.container}`]: {

@@ -13,7 +13,7 @@ const DashboardLayouts = () => {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
+        <Box className="app" height={"100vh"}>
           <SideBar />
           <main className="content" style={{ flex: 1 }}>
             <TopBar />
@@ -21,7 +21,7 @@ const DashboardLayouts = () => {
               <Outlet />
             </Box>
           </main>{" "}
-        </div>
+        </Box>
       </ThemeProvider>{" "}
     </ColorModeContext.Provider>
   );

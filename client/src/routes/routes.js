@@ -14,7 +14,9 @@ const Faq = lazy(() => import("../pages/admin/faq"));
 const Form = lazy(() => import("../pages/admin/form"));
 const Geography = lazy(() => import("../pages/admin/geography"));
 const Invoices = lazy(() => import("../pages/admin/invoices"));
-const Line = lazy(() => import("../pages/admin/line"));
+const Line = lazy(() =>
+  import("../pages/admin/realTimeMetrics/UserActivityLineChart")
+);
 const Pie = lazy(() => import("../pages/admin/pie"));
 const Team = lazy(() => import("../pages/admin/team"));
 
@@ -105,16 +107,6 @@ export const router = createBrowserRouter([
           <Suspense fallback={<div> Loading... </div>}>
             {" "}
             <Invoices />
-          </Suspense>
-        ),
-      },
-
-      {
-        path: "line",
-        element: (
-          <Suspense fallback={<div> Loading... </div>}>
-            {" "}
-            <Line />
           </Suspense>
         ),
       },
