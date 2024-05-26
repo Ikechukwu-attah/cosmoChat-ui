@@ -5,6 +5,8 @@ import DashboardLayouts from "../pages/admin/layouts";
 // import Dashboard from "../pages/admin/admin";
 import BaseLayout from "../components/baseLayout/baseLayout";
 import { lazy, Suspense } from "react";
+import Login from "../pages/login/login";
+import Register from "../pages/register/register";
 
 const Dashboard = lazy(() => import("../pages/admin/admin"));
 const Contact = lazy(() => import("../pages/admin/contacts"));
@@ -24,7 +26,11 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <BaseLayout />,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      { index: true, element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+    ],
   },
 
   {
@@ -35,7 +41,6 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Dashboard />
           </Suspense>
         ),
@@ -45,7 +50,6 @@ export const router = createBrowserRouter([
         path: "contact",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Contact />
           </Suspense>
         ),
@@ -55,7 +59,6 @@ export const router = createBrowserRouter([
         path: "bar",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Bar />
           </Suspense>
         ),
@@ -65,7 +68,6 @@ export const router = createBrowserRouter([
         path: "calendar",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Calendar />
           </Suspense>
         ),
@@ -75,7 +77,6 @@ export const router = createBrowserRouter([
         path: "faq",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Faq />
           </Suspense>
         ),
@@ -85,7 +86,6 @@ export const router = createBrowserRouter([
         path: "form",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Form />
           </Suspense>
         ),
@@ -95,7 +95,6 @@ export const router = createBrowserRouter([
         path: "geography",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Geography />
           </Suspense>
         ),
@@ -105,7 +104,6 @@ export const router = createBrowserRouter([
         path: "invoices",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Invoices />
           </Suspense>
         ),
@@ -115,7 +113,6 @@ export const router = createBrowserRouter([
         path: "pie",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Pie />
           </Suspense>
         ),
@@ -125,7 +122,6 @@ export const router = createBrowserRouter([
         path: "team",
         element: (
           <Suspense fallback={<div> Loading... </div>}>
-            {" "}
             <Team />
           </Suspense>
         ),

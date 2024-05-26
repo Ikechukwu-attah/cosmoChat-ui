@@ -13,6 +13,7 @@
     "@fullcalendar/timegrid": "^6.1.11",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
+    "@mui/styles": "^5.15.18",
     "@nivo/bar": "^0.87.0",
     "@nivo/geo": "^0.87.0",
     "@nivo/line": "^0.87.0",

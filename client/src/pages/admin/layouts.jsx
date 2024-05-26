@@ -15,7 +15,10 @@ const DashboardLayouts = () => {
         <CssBaseline />
         <Box className="app" height={"100vh"}>
           <SideBar />
-          <main className="content" style={{ flex: 1 }}>
+          <main
+            className="content"
+            style={{ flex: 1, height: "100%", overflow: "scroll" }}
+          >
             <TopBar />
             <Box p={"20px"}>
               <Outlet />
