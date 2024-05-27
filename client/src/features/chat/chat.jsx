@@ -25,10 +25,8 @@ const Chat = ({ isOpen, onClose }) => {
   };
 
   const onSuccess = (aiResponse) => {
-    const cleanedResponse = aiResponse.text.choices[0].message.content.replace(
-      /^(AI|ai):\s*/,
-      ""
-    );
+    console.log("ai response", aiResponse.text);
+    const cleanedResponse = aiResponse.text.replace(/^(AI|ai):\s*/, "");
     setMessages((prev) => [
       ...prev,
       { text: cleanedResponse, sender: "ai", timestamp: aiResponse.timestamp },

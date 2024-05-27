@@ -3,17 +3,20 @@ import { useState } from "react";
 import { API_ENDPOINTS } from "../../../api/apiConfig";
 import { useNavigate } from "react-router-dom";
 
-export const useUserLogin = () => {
+export const useUserRegister = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setIsError] = useState(null);
   const navigate = useNavigate();
 
-  const login = async (userLoginData) => {
+  const register = async (userRegisterData) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(API_ENDPOINTS.LOGIN, userLoginData);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      const response = await axios.post(
+        API_ENDPOINTS.REGISTER,
+        userRegisterData
+      );
+
       setData(response.data);
       if (response.data) {
         navigate("/");
@@ -25,5 +28,5 @@ export const useUserLogin = () => {
     }
   };
 
-  return { login, isLoading, error, data };
+  return { register, isLoading, error, data };
 };
