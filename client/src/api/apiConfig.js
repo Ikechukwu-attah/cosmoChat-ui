@@ -9,4 +9,5 @@ export const API_ENDPOINTS = {
     CHATSTATISTICS: `${BASE_URL}/chat-statistics`,
     SYSTEMPERFORMANCE: `${BASE_URL}/system-performance`,
     CHATREQUEST: `${BASE_URL}/chat`,
+    SESSIONSTATISTICS: `${BASE_URL}/session/statistics`,
 };

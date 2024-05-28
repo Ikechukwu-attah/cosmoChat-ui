@@ -1,7 +1,32 @@
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useChatStatistics } from "../hooks/useChatStatistics";
+import { useSystemPerformance } from "../hooks/useSystemPerformance";
+import { useSectionStatistics } from "../hooks/useSectionStatistics";
 
 const ActivityOverview = () => {
+  const { chatStatistics, data, error, isLoading } = useChatStatistics();
+  const {
+    data: systemData,
+    systemPerformance,
+    isLoading: systemIsloading,
+    error: systemError,
+  } = useSystemPerformance();
+
+  const {
+    sectionStatistics,
+    isLoading: isLoadingSectionStatistics,
+    data: sectionStatisticsData,
+    error: sectionStatisticsError,
+  } = useSectionStatistics();
+
+  console.log("section statistics", sectionStatisticsData);
+
+  useEffect(() => {
+    chatStatistics();
+    systemPerformance();
+    sectionStatistics();
+  }, []);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
@@ -11,10 +36,10 @@ const ActivityOverview = () => {
               Session Management
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Active Sessions: 120
+              Active Sessions: {sectionStatisticsData?.activeSessions}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Peak Active Sessions: 200
+              Peak Active Sessions: {sectionStatisticsData?.peakActiveSessions}
             </Typography>
             <Button variant="contained" color="primary" sx={{ mt: 2 }}>
               View Details
@@ -29,13 +54,14 @@ const ActivityOverview = () => {
               Chat Statistics
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Total Chats: 300
+              Total Chats: {data?.totalChats}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Resolved Chats: 280
+              Resolved Chats: {data?.resolvedChats}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Average Response Time: 2 mins
+              Average Response Time: {Math.floor(data?.averageResponseTime)}{" "}
+              mins
             </Typography>
             <Button variant="contained" color="primary" sx={{ mt: 2 }}>
               View Details
@@ -50,13 +76,13 @@ const ActivityOverview = () => {
               System Performance
             </Typography>
             <Typography variant="body1" gutterBottom>
-              API Response Time: 200ms
+              API Response Time: {systemData?.apiResponseTime}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Success Rate: 99%
+              Success Rate: {systemData?.successRate}%
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Error Rate: 1%
+              Error Rate: {systemData?.errorRate}%
             </Typography>
             <Button variant="contained" color="primary" sx={{ mt: 2 }}>
               View Details
